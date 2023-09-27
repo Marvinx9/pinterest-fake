@@ -1,0 +1,60 @@
+{% extends "homepage.html" %}
+
+{% block titulo %}
+Perfil - {{ usuario.username }}
+{% endblock %}
+
+{% block body %}
+
+<body>
+{% include "navbar.html" %}
+
+<!-- enctype... permite tratar a imagem para que ela não dê erro -->
+<div class="container">
+{% if form %}
+
+
+      <form class="bloco-add-img" method="POST" enctype="multipart/form-data">
+          {{ form.csrf_token }}
+        <h2>{{ usuario.username }} - Seu perfil</h2>
+
+        <div class="bloco-arquivo">
+          <label for="foto" class="botao-arquivo">
+              Escolher Arquivo
+                {{ form.foto(class="input-arquivo", id="foto") }}
+          </label>
+          <span id="imagem-arquivo" class=""></span>
+        {{ form.botao_confirmacao(class="botao-login") }}
+      </form>
+{% else %}
+    <div class="bloco-add-img">
+        <h2>Perfil de - {{ usuario.username }}</h2>
+    </div>
+
+{% endif %}
+</div>
+<div class="conteudo">
+{% for foto in usuario.fotos %}
+    <div class="bloco-imagem">
+      <img src="{{ url_for('static', filename='fotos_posts/{}'.format(foto.imagem)) }}" alt="Finterest" />
+    </div>
+
+
+<!-- pegando o caminho da imagem que se encontra na classe Foto + o nome do arquivo da foto (nome seguro), que é o mesmo do banco de dados -->
+{% endfor %}
+</div>
+</div>
+    <script>
+        let input = document.getElementById("foto");
+        let imagemArquivo = document.getElementById("imagem-arquivo");
+
+        input.addEventListener("change", () => {
+            let inputImagem = document.querySelector("input[type=file]").files[0];
+
+            imagemArquivo.classList.add("visivel");
+            imagemArquivo.innerText = inputImagem.name;
+        });
+    </script>
+</body>
+
+{% endblock %}
