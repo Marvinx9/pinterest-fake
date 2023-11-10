@@ -8,7 +8,7 @@ import os
 app = Flask(__name__)
 
 # configura o banco de dados e também cria o banco de dados
-app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URL")
+app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///comunidade.db"
 # é uma chave de segurança que garante a segurança do meu app
 app.config["SECRET_KEY"] = "287414e2f37ddf4ae8be22503b94bd08"
 
